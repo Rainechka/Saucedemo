@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void correctLogin() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
 
         assertTrue(productsPage.titleIsDisplayed());
         assertEquals(productsPage.getTitle(), "Products");
@@ -19,9 +19,9 @@ public class LoginTest extends BaseTest {
     @DataProvider(name="incorrectLoginData")
     public Object[][] LoginData() {
         return new Object[][] {
-                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
-                {"", "secret_sauce", "Epic sadface: Username is required"},
-                {"standard_user", "", "Epic sadface: Password is required"}
+                {"locked_out_user", password, "Epic sadface: Sorry, this user has been locked out."},
+                {"", password, "Epic sadface: Username is required"},
+                {user, "", "Epic sadface: Password is required"}
         };
         }
 
