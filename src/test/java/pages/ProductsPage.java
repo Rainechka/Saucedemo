@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductsPage extends BasePage {
     private final By title = By.cssSelector("[class='title']");
@@ -21,10 +22,20 @@ public class ProductsPage extends BasePage {
         return driver.findElement(title2).isDisplayed();
     }
 
-    public void addToCart(String goodsName) throws InterruptedException {
-        By addToCard = By.xpath(String.format(ADD_TO_CART_BUTTON_PATTERN));
-        Thread.sleep(8000);
+    public void addToCart(String goodsName)  {
+        By addToCard = By.xpath(String.format(ADD_TO_CART_BUTTON_PATTERN, goodsName));
         driver.findElement(addToCard).click();
+    }
 
+    public void addToCart(int index) {
+        driver.findElements(By.xpath("//*[text()='Add to cart']")).get(index).click();
+    }
+
+    public void isOpen() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Add to cart']")));
+    }
+
+    public void openCart() {
+        driver.findElement(By.xpath("//*[@data-test='shopping-cart-link']")).click();
     }
 }

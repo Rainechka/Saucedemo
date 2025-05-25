@@ -1,28 +1,34 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
-    @Test(description = "проверка верной авторизации")
-    public void correctLogin() throws InterruptedException {
+    @Test
+    public void correctLogin() {
         loginPage.open();
-        loginPage.login("standart_user", "secret_sauce");
+        loginPage.login("standard_user", "secret_sauce");
+
         assertTrue(productsPage.titleIsDisplayed());
         assertEquals(productsPage.getTitle(), "Products");
     }
 
-    @Test()
-    public void incorrectLogin() {
-        loginPage.open();
-        loginPage.login("", "secret_sauce");
-    }
+    @DataProvider(name="incorrectLoginData")
+    public Object[][] LoginData() {
+        return new Object[][] {
+                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
+                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {"standard_user", "", "Epic sadface: Password is required"}
+        };
+        }
 
-    @Test
-    public void incorrectPasswordLogin() {
+    @Test(dataProvider = "incorrectLoginData")
+    public void incorrectLogin(String user, String pass, String errorMsg) {
         loginPage.open();
-        loginPage.login("", "secret_");
+        loginPage.login(user, pass);
+        assertEquals(loginPage.getErrorMsg(), errorMsg);
     }
 }
