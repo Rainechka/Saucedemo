@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
+import user.UserFactory;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -10,7 +11,7 @@ public class AddGoodsToCartTest extends BaseTest {
     @Test
     public void checkGoodsInCart() {
         loginPage.open();
-        loginPage.login(user, password);
+        loginPage.login(UserFactory.withAdminPermission());
         productsPage.isOpen();
         productsPage.addToCart(0);
         productsPage.addToCart(2);
