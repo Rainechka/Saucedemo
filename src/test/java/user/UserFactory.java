@@ -15,7 +15,7 @@ public class UserFactory {
     }
 
     public static User withoutPassword() {
-        return new User(PropertyReader.getProperty("saucedemo.locked-user"),"");
+        return new User(PropertyReader.getProperty("saucedemo.locked-user"), "");
     }
 
     public static User withoutLogin() {
