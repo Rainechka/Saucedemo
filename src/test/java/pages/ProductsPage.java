@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class ProductsPage extends BasePage {
     private final By title = By.cssSelector("[class='title']");
     private final By title2 = By.xpath("//*[text()='Products']");
+    private final By ADD_TO_CART_BTN = By.xpath("//*[text()='Add to cart']");
+    private final By SHOPPING_CART_LINK = By.xpath("//*[@data-test='shopping-cart-link']");
 
     public ProductsPage(WebDriver driver) {
         super(driver);
@@ -24,17 +26,19 @@ public class ProductsPage extends BasePage {
     }
 
     @Step("Добавление товара в корзину")
-    public void addToCart(int index) {
-        driver.findElements(By.xpath("//*[text()='Add to cart']")).get(index).click();
+    public ProductsPage addToCart(int index) {
+        driver.findElements(ADD_TO_CART_BTN).get(index).click();
+        return this;
     }
 
     @Step("Ожидаем прогрузки карточек товаров")
-    public void isOpen() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Add to cart']")));
+    public ProductsPage isOpen() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_TO_CART_BTN));
+        return this;
     }
 
     @Step("Открытие корзины")
     public void openCart() {
-        driver.findElement(By.xpath("//*[@data-test='shopping-cart-link']")).click();
+        driver.findElement(SHOPPING_CART_LINK).click();
     }
 }

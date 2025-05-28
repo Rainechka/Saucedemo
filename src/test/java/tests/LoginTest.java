@@ -8,6 +8,7 @@ import user.User;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static user.UserFactory.*;
+import static utils.AllureUtils.takeScreenshot;
 
 public class LoginTest extends BaseTest {
     @Epic("Модуль логина интернет-магазина")
@@ -22,8 +23,8 @@ public class LoginTest extends BaseTest {
     public void correctLogin() {
         loginPage.open();
         loginPage.login(withAdminPermission());
-
         assertTrue(productsPage.titleIsDisplayed());
+        takeScreenshot(driver);
         assertEquals(productsPage.getTitle(), "Products");
     }
 

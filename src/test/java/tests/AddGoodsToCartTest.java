@@ -21,11 +21,11 @@ public class AddGoodsToCartTest extends BaseTest {
     public void checkGoodsInCart() {
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
-        productsPage.isOpen();
-        productsPage.addToCart(0);
-        productsPage.addToCart(2);
-        productsPage.addToCart(3);
-        productsPage.openCart();
+        productsPage.isOpen()
+                .addToCart(0)
+                .addToCart(2)
+                .addToCart(3)
+                .openCart();
         assertTrue(cartPage.getProductsName().contains("Sauce Labs Backpack"));
         assertEquals(cartPage.getProductsName().size(), 3);
         assertFalse(cartPage.getProductsName().isEmpty());
